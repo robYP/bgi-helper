@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% block content %}
+
+<h3 class="h3 mb-2 text-gray-800">獲利計算</h3>
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">輸入項目、投資金額與預期每月出貨量</h6>
+  </div>
+  <div class="card-body">
+    <form action="{{url_for('profit')}}" method="POST" class="user">
+      {{ form.hidden_tag() }}
+      <div class="form-row">
+        <div class="col-md-5 mb-3 form-group">
+          {{ form.project.label }} {{ form.project( class="form-control" )}}
+        </div>
+        <div class="col-md-5 mb-3 form-group">
+          {{ form.investment.label }} {{ form.investment( class="form-control"
+          )}}
+        </div>
+        <div class="col-md-3 mb-3 form-group">
+          {{ form.shipment.label }} {{ form.shipment( class="form-control
+          form-control-user" )}}
+        </div>
+        <div class="col-md-1 mb-3 form-group">
+          {{ form.submit.label }} {{ form.submit( class="btn btn-primary
+          btn-user btn-block" ) }}
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">預估獲利</h6>
+    </div>
+    <div class="card-body">
+        <h6>專案項目：{{calc_result.project}}</h6>
+      <ul>
+        <li>回本前每月分潤：{{ calc_result.before_even}}</li>
+        <li>回本月數：{{calc_result.months_to_even}}</li>
+        <li>回本後每月分潤：{{calc_result.after_even}}</li>
+        <li>回本後年報酬率：{{calc_result.roi_after_even}}%</li>
+        <li>預估每月佣金分潤：{{calc_result.commission}}</li>
+      </ul>
+    </div>
+  </div>
+
+
+
+{% endblock %}
+

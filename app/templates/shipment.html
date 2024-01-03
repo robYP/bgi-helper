@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Shipment</h6>
+    </div>
+    <div class="card-body">
+        <form action="{{url_for('edit_shipment', id=shipment.id)}}" method="POST" class="user">
+            {{ form.hidden_tag() }}
+            <div class="form-row">
+                <div class="col-md-3 mb-3 form-group">
+                    {{ form.name.label }}
+                    {{ form.name(
+                        class="form-control"
+                    )}}
+                </div>
+                <div class="col-md-2 mb-3 form-group">
+                    {{ form.number.label }}
+                    {{ form.number(
+                        class="form-control"
+                    )}}
+                </div>
+                <div class="col-md-3 mb-3 form-group">
+                    {{ form.date.label }}
+                    {{ form.date(
+                        class="form-control form-control-user"
+                    )}}
+                </div>
+                <div class="col-md-3 mb-3 form-group">
+                    {{ form.quantity.label }}
+                    {{ form.quantity(
+                        class="form-control form-control-user"
+                    )}}
+                </div>
+                <div class="col-md-1 mb-3 form-group">
+                    {{ form.submit.label }}
+                    {{ form.submit(
+                        class="btn btn-primary btn-user btn-block"
+                    ) }}
+                </div>
+            </div>
+        </form>
+        <a href="{{url_for('delete_shipment', id=shipment.id)}}" class="btn btn-danger">刪除</a>
+        <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
+            CSS bloat and poor page performance. Custom CSS classes are used to create
+            custom components and custom utility classes.</p>
+    </div>
+</div>
+{% endblock %}

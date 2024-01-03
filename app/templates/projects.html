@@ -1,0 +1,136 @@
+{% extends 'base.html' %} {% block content %}
+
+<h3>專案項目</h3>
+
+{# only admin can see the project form content#} 
+{% if user.id == 1 %}
+
+<div class="row">
+  <form action="{{url_for('projects')}}" method="POST" class="user">
+    {{ form.hidden_tag() }}
+    
+    <div class="form-row">
+      <div class="col-md-4 mb-3 form-group">
+        {{ form.nation.label }}
+        {{ form.nation( class="form-control" )}}
+      </div>
+      <div class="col-md-4 mb-3 form-group">
+        {{ form.name.label }}
+        {{ form.name( class="form-control" )}}
+      </div>
+      <div class="col-md-4 mb-3 form-group">
+        {{ form.invest_type.label }}
+        {{ form.invest_type( class="form-control" )}}
+      </div>
+      <div class="col-md-4 mb-3 form-group">
+        {{ form.ore_type.label }}
+        {{ form.ore_type( class="form-control" )}}
+      </div>
+    </div>
+  
+
+    <div class="form-row">
+      <div class="col-md-5 mb-3 form-group">
+        {{ form.location.label }}
+        {{ form.location( class="form-control form-control-user" )}}
+      </div>
+   
+      <div class="col-md-3 mb-3 form-group">
+        {{ form.date.label }}
+        {{ form.date( class="form-control
+        form-control-user" )}}
+      </div>
+      <div class="col-md-3 mb-3 form-group">
+        {{ form.fund_raised.label }}
+        {{ form.fund_raised( class="form-control
+        form-control-user" )}}
+      </div>
+      <div class="col-md-3 mb-3 form-group">
+        {{ form.profit_b4.label }}
+        {{ form.profit_b4( class="form-control
+        form-control-user" )}}
+      </div>
+      <div class="col-md-3 mb-3 form-group">
+        {{ form.profit_after.label }}
+        {{ form.profit_after( class="form-control
+        form-control-user" )}}
+      </div>
+      <div class="col-md-3 mb-3 form-group">
+        {{ form.tax_rate.label }}
+        {{ form.tax_rate( class="form-control
+        form-control-user" )}}
+      </div>
+      <div class="col-md-3 mb-3 form-group">
+        {{ form.other_expense.label }}
+        {{ form.other_expense( class="form-control
+        form-control-user" )}}
+      </div>
+      <div class="col-md-3 mb-3 form-group">
+        {{ form.cap_profit.label }}
+        {{ form.cap_profit( class="form-control
+        form-control-user" )}}
+      </div>
+      <div class="col-md-3 mb-3 form-group">
+        {{ form.interest.label }}
+        {{ form.interest( class="form-control
+        form-control-user" )}}
+      </div>
+      <div class="col-md-3 mb-3 form-group">
+        {{ form.wait_interest.label }}
+        {{ form.wait_interest( class="form-control
+        form-control-user" )}}
+      </div>
+      <div class="col-md-3 mb-3 form-group">
+        {{ form.commission.label }}
+        {{ form.commission( class="form-control
+        form-control-user" )}}
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-10 mb-3 form-group">
+        {{ form.intro.label }}
+        {{ form.intro( class="form-control
+        form-control-user" )}}
+      </div>
+
+      <div class="col-md-1 mb-3 form-group">
+        {{ form.submit.label }}
+        {{ form.submit( class="btn btn-primary btn-user
+        btn-block" ) }}
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endif %}
+
+<div class="row">
+  {% for project in projects %}
+  <!-- Approach -->
+  <div class="col-lg-6 mb-4">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+          {% if project.nation == "MAL"%} 馬來西亞 🇲🇾 {% else %} 印尼 🇮🇩 
+          {% endif %} {{project.name}} - {{project.ore_type}}
+        </h6>
+        <br>
+        <a class="btn btn-warning" href="{{url_for('edit_project', id=project.id)}}">EDIT</a>
+        {% if user.id == 1 %}
+        <a class="btn btn-danger" href="{{url_for('delete_project', id=project.id)}}">DELETE</a>
+        {% endif %}
+      </div>
+      <div class="card-body">
+        <p>{{ project.intro }}</p>
+        <ul>
+          {% for attr, value in project.__dict__.items() %}
+          <li>{{attr}}:{{value}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
