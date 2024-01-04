@@ -23,6 +23,7 @@ def load_user(user_id):
 with app.app_context():
     db.create_all()
 
+
 # Import csv to database
 def import_csv_to_database(table_name,csv_filename, *columns):
     df = pd.read_csv(csv_filename)
@@ -100,13 +101,13 @@ def logout():
 @login_required
 def dashboard():
     
-    def find_project_status(project_name:str, shipments) -> project_status | None:
+    def find_project_status(project_name:str, shipments):
         try:
             project = Projects.query.filter_by(name=project_name).one()
             project_status = project.project_status(shipments)
             return project_status
         except:
-            flash(f"Project {project_name} not found!")
+            # flash(f"Project {project_name} not found!")
             return None
     # Projects
 
@@ -122,11 +123,6 @@ def dashboard():
     gap_jetty_ii_project_status = find_project_status("GAP JETTY II", Shipments)
     gap_project_status = find_project_status("GAP", Shipments)
     rb_project_status = find_project_status("RB", Shipments)
-    
-    # GAP_project = Projects.query.filter_by(name="GAP").one()
-    # gap_project_status = GAP_project.project_status(Shipments)
-    # RB_project = Projects.query.filter_by(name="RB").one()
-    # rb_project_status = RB_project.project_status(Shipments)
     
     return render_template("index.html",user=current_user, gap_jetty=gap_jetty_ii_project_status, gap=gap_project_status, rb=rb_project_status,Shipments=Shipments, all_project_status=all_project_status )
 
